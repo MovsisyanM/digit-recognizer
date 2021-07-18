@@ -1,3 +1,12 @@
 canvas {
   border: 2px solid black;
+  position: relative;
+  display: inline-block;
+}
+
+#canvasHolder {
+  border: 2px solid red;
+  max-height: 35%;
+  height: 35%;
+  text-align: center;
 }
