@@ -90,7 +90,7 @@ function endDraw(e) {
 
     // Init brush
     ctx.lineCap = "round";
-    ctx.lineWidth = canvas.height/10;
+    ctx.lineWidth = canvas.height/18;
     ctx.moveTo(0,0)
     ctx.beginPath()
 
@@ -120,7 +120,7 @@ function draw(e) {
 
     // Setting brush size and cap
     ctx.lineCap = "round";
-    ctx.lineWidth = canvas.height/10;
+    ctx.lineWidth = canvas.height/15;
 
 
     // Getting current x, y coordinates relative to canvas top left
