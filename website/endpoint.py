@@ -3,7 +3,7 @@ import urllib
 from PIL import Image, ImageOps
 app = Flask(__name__)
 
-imgCounter = 1015
+imgCounter = 0
 
 
 @app.route("/", methods=["POST"])
