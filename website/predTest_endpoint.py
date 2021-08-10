@@ -1,55 +1,40 @@
-import skimage.io as skio
-import skimage.filters as skfltr
-import skimage.color as skclr
-import pickle
-import pandas as pd
-import numpy as np
-from joblib import load
-from PIL import Image, ImageOps
 import urllib
-from flask import Flask, request, Response
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.multiclass import OneVsRestClassifier
-print("Loading model")
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from PIL import Image, ImageOps
+from tensorflow.keras.models import load_model
+from sklearn.preprocessing import minmax_scale
+from flask import Flask, Response, request
+
 app = Flask(__name__)
 
 
-# Choosing Otsu as the best threshold
-def binarize_images(image_collection):
-    """
-    Inverts a collection of images and makes it binary
-    """
-
-    imges = []
-
-    for img in image_collection:
-        thresh = skfltr.threshold_mean(img)
-        binary = img < thresh
-        imges.append(binary)
-
-    return imges
+# loading model
+model = load_model("..\models\99.62\99.62.h5")
+model.load_weights("..\models\99.62\checkpoint.hdf5")
 
 
-onevrest = pickle.load(open(r"..\models\ovr.pkl", "rb"))
+def img_preproc(data):
+    """Convert an image uri into an image, grayscale, invert, resize, minmax, flatten"""
+    img = Image.open(urllib.request.urlopen(data))
+    img = np.invert(np.array([np.array(
+        ImageOps.grayscale(
+            img.resize((28, 28))
+        ).getdata())
+    ]).reshape(28, 28))/255
 
-print("Complete!")
+    return minmax_scale(img).reshape(1, 28*28)
 
 
 @app.route("/", methods=["POST"])
-def hello():
-    global imgCounter
+def digit_recognizer():
     data = request.data.decode("utf-8")
 
-    img = Image.open(urllib.request.urlopen(data))
-    print(img.size)
-    img = np.array(binarize_images(
-        [np.array(ImageOps.grayscale(img.resize((28, 28)))
-                  .getdata())])).reshape(1, 28*28)
+    img = img_preproc(data)
+    pred = np.argmax(model.predict(img), axis=1)
 
-    pred = onevrest.predict(img)
-
-    print(f"\n\nI guess {pred}\n\n")
+    print(f"\n\n{pred}\n\n")
 
     resp = Response(f'kk')
     resp.headers['Access-Control-Allow-Origin'] = '*'
