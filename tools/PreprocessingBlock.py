@@ -13,11 +13,13 @@ class PreprocessingBlock(Layer):
         self.zoom = RandomZoom(*zoom, seed=seed)
         self.resize = Resizing(28, 28, interpolation="bicubic")
 
-    def call(self, input_data):
-        x = self.reshape(x)
-        x = self.width(x)
-        x = self.translation(x)
-        x = self.zoom(x)
-        x = self.resize(x)
+    def call(self, input_data, training=None):
+        x = self.reshape(input_data)
+
+        if training:
+            x = self.width(x)
+            x = self.translation(x)
+            x = self.zoom(x)
+            x = self.resize(x)
 
         return x
