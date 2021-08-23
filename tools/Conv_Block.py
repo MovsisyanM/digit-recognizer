@@ -21,3 +21,9 @@ class Conv_Block(Layer):
                 units, kernel_size=kernel_size, padding="same", strides=2, activation="relu"))
 
         self.layers.append(Dropout(0.3, seed=seed))
+
+    def call(self, input_data):
+        out = input_data
+        for layer in self.layers:
+            out = layer(out)
+        return out
