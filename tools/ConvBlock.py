@@ -1,7 +1,7 @@
 from keras.layers import Layer, Conv2D, MaxPool2D, Dropout, BatchNormalization
 
 
-class Conv_Block(Layer):
+class ConvBlock(Layer):
     """A block of convolutional layers"""
 
     def __init__(self, units, kernel_size, depth, pool=False, seed=173):
