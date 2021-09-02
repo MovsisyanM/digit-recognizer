@@ -4,8 +4,8 @@ from keras.layers import Layer, Conv2D, MaxPool2D, Dropout, BatchNormalization
 class ConvBlock(Layer):
     """A block of convolutional layers"""
 
-    def __init__(self, units, kernel_size, depth, pool=False, seed=173):
-        super(ConvBlock, self).__init__()
+    def __init__(self, units, kernel_size, depth, pool=False, seed=173, **kwargs):
+        super(ConvBlock, self).__init__(**kwargs)
         self.units = units
         self.kernel_size = kernel_size
         self.depth = depth
@@ -31,7 +31,7 @@ class ConvBlock(Layer):
         for layer in self.layers:
             out = layer(out)
         return out
-    
+
     def get_config(self):
         config = super(ConvBlock, self).get_config()
         config["units"] = self.units
@@ -39,10 +39,9 @@ class ConvBlock(Layer):
         config["depth"] = self.depth
         config["pool"] = self.pool
         config["seed"] = self.seed
-        
+
         return config
-        
+
     @classmethod
     def from_config(cls, config):
         cls(**config)
-        

@@ -5,8 +5,8 @@ from keras.layers.experimental.preprocessing import RandomWidth, RandomTranslati
 class PreprocessingBlock(Layer):
     """Preprocessing block (width, translation, zoom, seed=173)"""
 
-    def __init__(self, width, translation, zoom, seed=173):
-        super(PreprocessingBlock, self).__init__()
+    def __init__(self, width, translation, zoom, seed=173, **kwargs):
+        super(PreprocessingBlock, self).__init__(**kwargs)
         self.w, self.t, self.z, self.s = width, translation, zoom, seed
         self.reshape = Reshape((28, 28, 1))
         self.width = RandomWidth(width, seed=seed, interpolation="bicubic")
@@ -25,16 +25,16 @@ class PreprocessingBlock(Layer):
             x = self.resize(x)
 
         return x
-
+    
     def get_config(self):
         config = super(PreprocessingBlock, self).get_config()
         config["width"] = self.w
         config["translation"] = self.t
         config["zoom"] = self.z
         config["seed"] = self.s
-
+        
         return config
-
+        
     @classmethod
     def from_config(cls, config):
         cls(**config)
