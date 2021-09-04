@@ -71,44 +71,48 @@ function startDraw(e) {
 
 // Called when mouseup
 function endDraw(e) {
-    // Stop painting
-    painting = false
-    ctx.closePath()
-
-    // Get the width and height of the drawing (not the canvas)
-    let width = (maxX - minX);
-    let height = (maxY - minY);
-
-    // Calculate the offset of drawing center from canvas center 
-    let offsetX = canvas.width/2 - (minX + width/2);
-    let offsetY = canvas.height/2 - (minY + height/2);
-
-    // Reset canvas
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#000000";
-
-    // Init brush
-    ctx.lineCap = "round";
-    ctx.lineWidth = canvas.height/18;
-    ctx.moveTo(0,0)
-    ctx.beginPath()
-
-    // For each stroke, repaint it centered
-    for (let i = 0; i < pathsX.length; i++) {
-        // Drawing the line
-        ctx.lineTo(pathsX[i] + offsetX, pathsY[i] + offsetY);
-        ctx.stroke();
-    }
+    if (painting) {
+        // Stop painting
+        painting = false
+        ctx.closePath()
     
-    ctx.closePath()
-
-
-    // Send data to endpoint
-    xhr = new XMLHttpRequest();
-    let rstring = "http://127.0.0.1:5000/";
-    xhr.open("POST", rstring, true);
-    xhr.send(canvas.toDataURL());
+        // Get the width and height of the drawing (not the canvas)
+        let width = (maxX - minX);
+        let height = (maxY - minY);
+    
+        // Calculate the offset of drawing center from canvas center 
+        let offsetX = canvas.width/2 - (minX + width/2);
+        let offsetY = canvas.height/2 - (minY + height/2);
+    
+        // Reset canvas
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#000000";
+    
+        // Init brush
+        ctx.lineCap = "round";
+        ctx.lineWidth = canvas.height/18;
+        ctx.moveTo(0,0)
+        ctx.beginPath()
+    
+        // For each stroke, repaint it centered
+        for (let i = 0; i < pathsX.length; i++) {
+            // Drawing the line
+            ctx.lineTo(pathsX[i] + offsetX, pathsY[i] + offsetY);
+            ctx.stroke();
+        }
+        
+        ctx.closePath()
+    
+    
+        // Send data to endpoint
+        xhr = new XMLHttpRequest();
+        let rstring = "http://127.0.0.1:5000/";
+        xhr.open("POST", rstring, false);
+        xhr.send(canvas.toDataURL());
+        var predDisplay = document.getElementById("prediction");
+        predDisplay.innerHTML = "The model predicted: " + xhr.responseText
+    }
 }
 
 
