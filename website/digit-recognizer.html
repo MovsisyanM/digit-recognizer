@@ -50,9 +50,9 @@
         <img src="visuals\Preprocessing block.svg" class="svg"></img>
         <br/>
         <br/>
-        The <b>Reshape</b> layer reshapes the 2D tensor of size (n, 784) into (n, 28, 28, 1), n being the number of observations per batch. The RandomWidth layer scales the image along the x-axis by a random amount. The RandomTranslation layer translates the image to a random location. The RandomZoom layer zooms the image by a random amount. The Resizing layer resizes the image back to 28x28. The data is then sent off to be processed by the convolutional and Singularity Extracting chains.
+        The <b>Reshape</b> layer reshapes the 2D tensor of size (n, 784) into (n, 28, 28, 1), n being the number of observations per batch. The RandomWidth layer scales the image along the x-axis by a random amount. The RandomTranslation layer translates the image to a random location. The RandomZoom layer zooms the image by a random amount. The Resizing layer resizes the image back to 28x28. The data is then sent off to be processed by the Convolutional and Singularity Extracting chains.
         <br/><br/>
-        The <b>Convolutional Chain</b> is designed to learn and detect patterns that correspond to each digit. It, as illustrated below, is built with 11 layers: 3 convolutional blocks, 3 batch norm., 3 dropout layers, a global average pooling layer, and a flattening layer. 
+        The <b>Convolutional Chain</b> is designed to learn and detect patterns that correspond to each digit. It, as illustrated below, is built with 11 building blocks: 3 convolutional blocks, 3 batch norm., 3 dropout layers, a global average pooling layer, and a quite redundant but still useful flattening layer. 
         <br/>
         <br/>
         <img src="visuals\ConvChain.svg" class="svg"></img>
@@ -70,6 +70,12 @@
         <img src="visuals\Flatten.svg" width="70%"></img>
         <br/>
         <br/>
+        The <b>Convolutional Block</b> is a series of sequentially connected convolutional, batch normalization, and max-pooling layers. During the instantiation of a block, we supply arguments upon which it generates and connects layers. Specifying the depth parameter causes the block to generate just as many "Convolution-Batch Norm" pairs, only leaving the last convolutional layer without a batch norm partner. If the pool argument is True, it generates a max-pooling layer of second degree; otherwise, it increases the strides of the last convolutional layer to 2. Below is a convolutional block with depth 2 and pooling enabled.
+        <br/>
+        <br/>
+        <img src="visuals\Sample ConvBlock diagram.svg" class="svg"></img>
+        <br/>
+        <br/>
         The <b>convolutional</b> layer applies a convolution operation (basically a dot product) on the input matrix using kernels. The weights of the kernels are inferred during training which allows the model to find useful repeating spatial patterns in the inputs. The animation below shows how the kernel (dark 3x3 area) passes above each input pixel (blue squares), applying a convolution operation to nearby pixels, thus computing the output (green matrix).
         <br/>
         <br/>
@@ -80,6 +86,16 @@
         <br/>
         <img src="visuals\Singularity Extracting chain.svg" class="svg"></img>
         <img src="visuals\SE chain outputs.svg" class="svg"></img>
+        The <b>Singularity eXtractor</b> layer accentuates non-uniform feature localities that otherwise a convolutional block might miss. An example of this would be the array [10, 10, 2, 10, 10], where the feature in the middle differs from the rest significantly, this significant difference would be accentuated by the singularity extractor, and it would output an array that would look like this: [0.13, 0.08, 0.94, 0.08, 0.13]. The formula below defines the Singularity Extracting operation of kernel size 3x3.
+        <br/>
+        <br/>
+        <img width="650" src="https://latex.codecogs.com/png.latex?%5Cdpi%7B240%7D%20%5Cbg_white%20%5Cbegin%7Bpmatrix%7D%5Cfrac%20%7BConvolution(Input%2C%20%5Cbegin%7Bbmatrix%7D1%20%26%201%20%26%201%20%5C%5C1%20%26%201%20%26%201%20%5C%5C1%20%26%201%20%26%201%20%5C%5C%20%5Cend%7Bbmatrix%7D)%5C%20-%5C%20Input%7D%20%7BConvolution(Input%2C%20%5Cbegin%7Bbmatrix%7D1%20%26%201%20%26%201%20%5C%5C1%20%26%201%20%26%201%20%5C%5C1%20%26%201%20%26%201%20%5C%5C%20%5Cend%7Bbmatrix%7D)%7D%5Cend%7Bpmatrix%7D%5E%7Bdegree%7D">
+        <br/>
+        <br/>
+        The <b>Cognitive Block</b>, as shown below, consists of concatenate, dense, batch norm, and dropout layers. The concatenate layer merges the outputs of the Convolutional and Singularity Extracting chains. The dense layers are just a bunch of linear functions with a  touch of non-linearity (in this case, a leaky rectified linear unit, tanh, and softmax).
+        <br/>
+        <br/>
+        <img src="visuals\Cognitive Block.svg" class="svg"></img>
         <br/>
         <br/>
     </p>
