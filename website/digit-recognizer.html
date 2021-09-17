@@ -82,6 +82,12 @@
         <img src="visuals\conv example.gif"></img>
         <br/>
         <br/>
+        The max-pooling layer helps us reduce computational needs by down-sampling the input. 
+        <br/>
+        <br/>
+        <img src="visuals\maxpool.gif"></img>
+        <br/>
+        <br/>
         <br/>
         <br/>
         <img src="visuals\Singularity Extracting chain.svg" class="svg"></img>
@@ -98,6 +104,15 @@
         <img src="visuals\Cognitive Block.svg" class="svg"></img>
         <br/>
         <br/>
+    </p>
+    <h2>Training MSXCN</h2>
+    <p>
+        Two datasets were used to train and validate the model, but only one to test it. The larger dataset was the MNIST digits dataset containing 70,000 handwritten digits in total. 28,000 observations were used to test; the rest were merged with the second dataset. The second dataset is the Digits mini dataset containing 5500 digits drawn on the canvas you saw before (the black square). We collected and published this dataset; it is available for free on Kaggle (link below). The joint dataset was then split into 90% training and 10% validation sets. 
+        <br/>
+        <br/>
+        The model was optimized using an RMSprop optimizer. A callback of ReduceLROnPlateu was implemented to help the model converge faster by decreasing the learning rate by a factor of 3 every 3 epochs of no improvement. A ModelCheckpoint was used to save the model every time it reached a new extremum. The custom-written GateOfLearning callback was used to kick the model out of local extrema, hoping it would converge to a better one. In the illustration below, we can see how the model can sometimes get stuck in local extrema. The goal of GateOfLearning is to kick the model into the air and hope it lands in better extrema. This goal is often not met. 
+        <img src="visuals\converge.svg" width="40%"></img>
+        Moreover, GateOfLearning can cause under/overfit on many occasions. It can also cause the learning rate to diverge into infinity (which is moderated by an exception raise) when the patience and factor values overpower the optimizer and ReduceLROnPlateau combined. However, it might push the model to a global extremum in the right hands and with a pint of luck.
     </p>
 </body>
 <link rel="stylesheet" type="text/css" href="digit-recognizer.css">
