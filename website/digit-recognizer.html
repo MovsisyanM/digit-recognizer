@@ -295,7 +295,7 @@ button {
         The model was optimized using an RMSprop optimizer. A callback of ReduceLROnPlateu 
         was implemented to help the model converge faster by decreasing the learning rate by a 
         factor of 3 every 3 epochs of no improvement. A ModelCheckpoint was used to save the 
-        model every time it reached a new extremum. The custom-written GateOfLearning callback 
+        model every time it reached a new extremum. The custom-written <b>GateOfLearning</b> callback 
         was used to kick the model out of local extrema, hoping it would converge to a better 
         one. In the illustration below, we can see how the model can sometimes get stuck in local 
         extrema. The goal of GateOfLearning is to kick the model into the air and hope it lands 
