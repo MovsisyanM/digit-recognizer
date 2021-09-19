@@ -1,6 +1,119 @@
 <html>
-  <head>
+<head>
     <title>MSXCN - Movsisyan.info</title>
+    <style>
+canvas {
+  border: 2px solid black;
+  position: relative;
+  display: inline-block;
+}
+
+#canvasHolder {
+  border: 0px solid red;
+  max-height: 35%;
+  height: 35%;
+  text-align: center;
+}
+
+h1 {
+  font-size: xx-large;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  width: 84%;
+  height: 100vh;
+  background-color: #fff;
+  margin: 8%;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.svg {
+  width: 100%;
+}
+
+a {
+  color: #272727;
+  text-decoration: none;
+}
+
+hr {
+  color: #373737;
+  z-index: 160;
+  position: sticky;
+  top: 0px;
+}
+
+p {
+  line-height: 2.2em;
+  letter-spacing: 0.5px;
+  font-size: large;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+h2 {
+  margin-top: 30px;
+  font-size: x-large;
+}
+
+h5 {
+  font-size: large;
+  margin: 3em 0 0 0;
+}
+
+h6 {
+  margin: 0 0 3em 0;
+  color: #676767;
+  font-size: small;
+}
+
+button {
+  min-width: 11em;
+  min-height: 2em;
+  width: 9vw;
+  height: 5vh;
+  max-height: 2em;
+  background: linear-gradient(126deg, #7f7f7f 0%, #5f5f5f 100%);
+  position: relative;
+  box-shadow: inset 3px 3px 3px 3px rgba(0, 0, 0, 0.33);
+  border-radius: 14px;
+  border: 0;
+  text-align: center;
+  text-shadow: 4px 4px 5px #575757;
+  color: #fff;
+  font-size: large;
+  opacity: 0;
+  animation: btnAppear 0.8s 6.6s ease forwards;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.section {
+  font-size: 28;
+  display: grid;
+  grid-template-columns: 15% auto 15%;
+  width: 99vw;
+}
+
+.article {
+  padding: 2em;
+  font-size: larger;
+}
+
+#prediction {
+  text-align: center;
+}
+
+#output {
+  width: 100%;
+}
+    </style>
 </head>
 <body>
     <h1>Movsisyans Singularity eXtracting Convolutional Network</h1>
@@ -41,13 +154,13 @@
     <p>Mr. MSXC Net is complex indeed, but do not worry! Once we look at the individual layers one by one, everything will be clear. As illustrated in the image below, a Preprocessing block, a Convolutional chain, a Singularity Extracting chain, and a Cognitive block compose MSXCN.
         <br/>
         <br/>
-        <img src="visuals\MSXCN Structure.svg" class="svg"></img>
+        <img src="https://movsisyan.info/resources/msxcn/MSXCN Structure.svg" class="svg"></img>
         <br/>
         <br/>
         The <b>Preprocessing block</b> prepares the data for consumption. During training, the data passes through five consecutive layers: Reshape, RandomWidth, RandomTranslation, RandomZoom, Resizing. However, during evaluation or production, the data only passes through the Reshape layer.
         <br/>
         <br/>
-        <img src="visuals\Preprocessing block.svg" class="svg"></img>
+        <img src="https://movsisyan.info/resources/msxcn/Preprocessing block.svg" class="svg"></img>
         <br/>
         <br/>
         The <b>Reshape</b> layer reshapes the 2D tensor of size (n, 784) into (n, 28, 28, 1), n being the number of observations per batch. The RandomWidth layer scales the image along the x-axis by a random amount. The RandomTranslation layer translates the image to a random location. The RandomZoom layer zooms the image by a random amount. The Resizing layer resizes the image back to 28x28. The data is then sent off to be processed by the Convolutional and Singularity Extracting chains.
@@ -55,43 +168,43 @@
         The <b>Convolutional Chain</b> is designed to learn and detect patterns that correspond to each digit. It, as illustrated below, is built with 11 building blocks: 3 convolutional blocks, 3 batch norm., 3 dropout layers, a global average pooling layer, and a quite redundant but still useful flattening layer. 
         <br/>
         <br/>
-        <img src="visuals\ConvChain.svg" class="svg"></img>
+        <img src="https://movsisyan.info/resources/msxcn/ConvChain.svg" class="svg"></img>
         <br/>
         <br/>
         The <b>dropout</b> layer discards some of the connections between layers, thus countering overfit. The batch normalization layer standardizes its inputs. The standardization of inputs helps the model learn faster as it does not have to spend numerous iterations adjusting each of the weights to account for extreme input values. The global average pooling layer maps the average of each spatial feature to a category confidence map which significantly reduces computational needs. 
         <br/>
         <br/>
-        <img src="visuals\dropout.png"></img>
+        <img src="https://movsisyan.info/resources/msxcn/dropout.png"></img>
         <br/>
         <br/>
         The <b>flatten</b> layer assures that all output from the chain is flattened.
         <br/>
         <br/>
-        <img src="visuals\Flatten.svg" width="70%"></img>
+        <img src="https://movsisyan.info/resources/msxcn/Flatten.svg" width="70%"></img>
         <br/>
         <br/>
         The <b>Convolutional Block</b> is a series of sequentially connected convolutional, batch normalization, and max-pooling layers. During the instantiation of a block, we supply arguments upon which it generates and connects layers. Specifying the depth parameter causes the block to generate just as many "Convolution-Batch Norm" pairs, only leaving the last convolutional layer without a batch norm partner. If the pool argument is True, it generates a max-pooling layer of second degree; otherwise, it increases the strides of the last convolutional layer to 2. Below is a convolutional block with depth 2 and pooling enabled.
         <br/>
         <br/>
-        <img src="visuals\Sample ConvBlock diagram.svg" class="svg"></img>
+        <img src="https://movsisyan.info/resources/msxcn/Sample ConvBlock diagram.svg" class="svg"></img>
         <br/>
         <br/>
         The <b>convolutional</b> layer applies a convolution operation (basically a dot product) on the input matrix using kernels. The weights of the kernels are inferred during training which allows the model to find useful repeating spatial patterns in the inputs. The animation below shows how the kernel (dark 3x3 area) passes above each input pixel (blue squares), applying a convolution operation to nearby pixels, thus computing the output (green matrix).
         <br/>
         <br/>
-        <img src="visuals\conv example.gif"></img>
+        <img src="https://movsisyan.info/resources/msxcn/conv example.gif"></img>
         <br/>
         <br/>
         The <b>max-pooling</b> layer helps us reduce computational needs by down-sampling the input. 
         <br/>
         <br/>
-        <img src="visuals\maxpool.gif"></img>
+        <img src="https://movsisyan.info/resources/msxcn/maxpool.gif"></img>
         <br/>
         <br/>
         <br/>
         <br/>
-        <img src="visuals\Singularity Extracting chain.svg" class="svg"></img>
-        <img src="visuals\SE chain outputs.svg" class="svg"></img>
+        <img src="https://movsisyan.info/resources/msxcn/Singularity Extracting chain.svg" class="svg"></img>
+        <img src="https://movsisyan.info/resources/msxcn/SE chain outputs.svg" class="svg"></img>
         The <b>Singularity eXtractor</b> layer accentuates non-uniform feature localities that otherwise a convolutional block might miss. An example of this would be the array [10, 10, 2, 10, 10], where the feature in the middle differs from the rest significantly, this significant difference would be accentuated by the singularity extractor, and it would output an array that would look like this: [0.13, 0.08, 0.94, 0.08, 0.13]. The formula below defines the Singularity Extracting operation of kernel size 3x3.
         <br/>
         <br/>
@@ -101,7 +214,7 @@
         The <b>Cognitive Block</b>, as shown below, consists of concatenate, dense, batch norm, and dropout layers. The concatenate layer merges the outputs of the Convolutional and Singularity Extracting chains. The dense layers are just a bunch of linear functions with a  touch of non-linearity (in this case, a leaky rectified linear unit, tanh, and softmax).
         <br/>
         <br/>
-        <img src="visuals\Cognitive Block.svg" class="svg"></img>
+        <img src="https://movsisyan.info/resources/msxcn/Cognitive Block.svg" class="svg"></img>
         <br/>
         <br/>
     </p>
@@ -111,7 +224,7 @@
         <br/>
         <br/>
         The model was optimized using an RMSprop optimizer. A callback of ReduceLROnPlateu was implemented to help the model converge faster by decreasing the learning rate by a factor of 3 every 3 epochs of no improvement. A ModelCheckpoint was used to save the model every time it reached a new extremum. The custom-written GateOfLearning callback was used to kick the model out of local extrema, hoping it would converge to a better one. In the illustration below, we can see how the model can sometimes get stuck in local extrema. The goal of GateOfLearning is to kick the model into the air and hope it lands in better extrema. This goal is often not met. 
-        <img src="visuals\converge.svg" width="40%"></img>
+        <img src="https://movsisyan.info/resources/msxcn/converge.svg" width="40%"></img>
         Moreover, GateOfLearning can cause under/overfit on many occasions. It can also cause the learning rate to diverge into infinity (which is moderated by an exception raise) when the patience and factor values overpower the optimizer and ReduceLROnPlateau combined. However, in the right hands and with a pint of luck, it might push the model to a global extremum.
         <br/><br/><br/>
         <a href="http://movsisyan.info/?redir=https://github.com/MovsisyanM/digit-recognizer" target="_blank">
@@ -126,6 +239,191 @@
     </p>
 
 </body>
-<link rel="stylesheet" type="text/css" href="digit-recognizer.css">
-<script src="digit-recognizer.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito&family=Overpass+Mono&display=swap" rel="stylesheet"> 
+<script>
+holder = document.getElementById("canvasHolder");
+canvas = document.getElementById("inputCanvas");
+ctx = canvas.getContext("2d");
+
+let painting = false;
+let maxX = 0;
+let minX = 0;
+let maxY = 0;
+let minY = 0;
+let pathsX = [];
+let pathsY = [];
+
+
+// Init brush
+ctx.lineWidth = 13;
+ctx.lineCap = "round";
+ctx.strokeStyle = '#000000';
+ctx.fillStyle = '#000000';
+
+
+// Resize canvas to beautiful proportions
+function correctHeight() {
+    if (holder.clientWidth < holder.clientHeight) {
+        canvas.height = holder.clientWidth
+        canvas.width = canvas.height
+    } else {
+        if (canvas.height !== holder.clientHeight) {
+            canvas.height = holder.clientHeight
+            canvas.width = canvas.height
+        }
+    }
+}
+
+
+// Called when mousedown
+function startDraw(e) {
+    // Reset canvas
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#000000";
+
+
+    // Reset arrays that record mouse movement
+    pathsX = [];
+    pathsY = [];
+
+
+    // Init brush
+    painting = true
+    ctx.lineCap = "round";
+    ctx.lineWidth = canvas.height/10;
+
+
+    // Getting current x, y coordinates relative to canvas top left
+    let currX = e.pageX - canvas.offsetLeft;
+    let currY = e.pageY - holder.offsetTop;
+
+
+    maxX = currX;
+    minX = currX;
+    maxY = currY;
+    minY = currY;
+
+
+    // Start path
+    ctx.moveTo(currX, currY)
+    ctx.beginPath()
+    draw(e)
+}
+
+
+// Called when mouseup
+function endDraw(e) {
+    if (painting) {
+        // Stop painting
+        painting = false
+        ctx.closePath()
+    
+        // Get the width and height of the drawing (not the canvas)
+        let width = (maxX - minX);
+        let height = (maxY - minY);
+    
+        // Calculate the offset of drawing center from canvas center 
+        let offsetX = canvas.width/2 - (minX + width/2);
+        let offsetY = canvas.height/2 - (minY + height/2);
+    
+        // Reset canvas
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#000000";
+    
+        // Init brush
+        ctx.lineCap = "round";
+        ctx.lineWidth = canvas.height/18;
+        ctx.moveTo(0,0)
+        ctx.beginPath()
+    
+        // For each stroke, repaint it centered
+        for (let i = 0; i < pathsX.length; i++) {
+            // Drawing the line
+            ctx.lineTo(pathsX[i] + offsetX, pathsY[i] + offsetY);
+            ctx.stroke();
+        }
+        
+        ctx.closePath()
+    
+    
+        // Send data to endpoint
+        xhr = new XMLHttpRequest();
+        let rstring = "http://127.0.0.1:5000/";
+        xhr.open("POST", rstring, false);
+        xhr.send(canvas.toDataURL());
+        var predDisplay = document.getElementById("prediction");
+        predDisplay.innerHTML = "The model predicted: " + xhr.responseText
+    }
+}
+
+
+// Draw to the next mouse position
+function draw(e) {
+    // If not drawing yet, idle
+    if (!painting) return;
+
+
+    // Setting brush size and cap
+    ctx.lineCap = "round";
+    ctx.lineWidth = canvas.height/15;
+
+
+    // Getting current x, y coordinates relative to canvas top left
+    let currX = e.pageX - canvas.offsetLeft;
+    let currY = e.pageY - holder.offsetTop;
+
+
+    // Drawing the line
+    ctx.lineTo(currX, currY);
+    ctx.stroke();
+
+
+    // Set coordinate extrema
+    if (currX > maxX) {
+        maxX = currX
+    } else if (currX < minX) {
+        minX = currX
+    }
+
+    if (currY > maxY) {
+        maxY = currY
+    } else if (currY < minY) {
+        minY = currY
+    }
+
+
+    // Record path
+    pathsX.push(currX)
+    pathsY.push(currY)
+}
+
+
+// Register event listeners
+document.addEventListener("mouseup", endDraw);
+canvas.addEventListener("mousedown", startDraw);
+canvas.addEventListener("mousemove", draw);
+
+
+// Registering a CTRL + Z to reset canvas
+document.onkeydown = (e) => {
+    if (e.key === "z" && e.ctrlKey) {
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#000000";
+    }
+}
+
+
+// Update canvas size each frame
+function Run() {
+    correctHeight();
+    window.requestAnimationFrame(Run);
+}
+
+Run();
+</script>
 </html>
