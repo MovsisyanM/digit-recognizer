@@ -6,5 +6,4 @@ and I was lucky to have Tigran Avetisyan as a teammate. We created a convolution
 neural network to classify digits and used two datasets to do so. One of the datasets  
 was collected by us for this project, the other being the well-known MNIST dataset.  
 Amassing over 5500 observations of drawn digits, we made it possible for the model  
-to label digits drawn on a DOM canvas, thus making it possible to test the model  
-from anywhere in the world. You can give it a shot at
+to accurately label digits drawn on a DOM canvas. You can find the project page <a href="https://www.movsisyan.info/msxcn">here</a>
